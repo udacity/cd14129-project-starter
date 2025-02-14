@@ -1,0 +1,60 @@
+definitions:
+  main.ErrorResponse:
+    properties:
+      error:
+        type: string
+    type: object
+  main.Photo:
+    properties:
+      id:
+        type: string
+      title:
+        type: string
+      url:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /photo:
+    post:
+      consumes:
+      - application/json
+      description: Create a new photo entry with a title and URL
+      parameters:
+      - description: Photo data
+        in: body
+        name: photo
+        required: true
+        schema:
+          $ref: '#/definitions/main.Photo'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/main.Photo'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+      summary: Create a new photo
+      tags:
+      - photos
+  /photos:
+    get:
+      description: Retrieve a list of all photos
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/main.Photo'
+            type: array
+      summary: Get all photos
+      tags:
+      - photos
+swagger: "2.0"
